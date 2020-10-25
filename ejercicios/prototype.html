@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>prototype</title>
+</head>
+<body>
+    <h1>Abre la consola</h1>
+    <script>
+        //funcion constructora
+
+        function SuperHero(name, superPower){
+            this.name = name;
+            this.superPower = superPower;
+        }
+
+        //métodos del objeto con Prototype
+
+        SuperHero.prototype.greet = function(){
+            console.log(`Hello, I'm ${this.name} and my super power is ${this.superPower}`);
+        }
+
+        const hulk =  new SuperHero('Hulk', 'super strength');
+
+        hulk.greet();
+
+        const flash =  new SuperHero('Flash', 'super speed');
+
+        flash.greet();
+    </script>
+</body>
+</html>

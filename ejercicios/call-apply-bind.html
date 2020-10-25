@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Abre la consola</h1>
+
+    <button class="button">Hola</button>
+    <button class="button">Como estás?</button>
+    <button class="button">Que bien te ves!</button>
+    <script>
+        //call sin parámetros
+
+        function saludar(){
+            console.log(`Hola. Soy ${this.nombre} ${this.apellido}`)
+        }
+
+        const felix = {
+            nombre: 'Felix',
+            apellido: 'Umaña'
+        }
+
+        saludar.call(felix)
+
+        //call con parámetros
+
+        function transportarse(distancia, vehiculo){
+            console.log(`${this.nombre} se moviliza ${distancia} metros en ${vehiculo}`)
+        }
+
+        const ramdhei = {
+            nombre: 'Ramdhei',
+            apellido: 'López Arcila'
+        }
+
+        transportarse.call(ramdhei, 400, 'Bicicleta')
+
+        //uso de apply
+
+        transportarse.apply(ramdhei, [1600, 'Moto'])
+
+        //nota que en lugar de usar los parámetros como en call, apply recibe el resto de los argumentos en un array
+
+        //uso de bind
+
+        const ramdheiSaluda = saludar.bind(ramdhei)
+        ramdheiSaluda()
+
+        const ramdheiEnBus = transportarse.bind(ramdhei)
+        ramdheiEnBus(2000, 'Bus de sideral lleno de gente aiudaaaa')
+
+        //caso de uso
+
+        const buttons = document.getElementsByClassName('button')
+
+        Array.prototype.forEach.call(buttons, button => {
+            button.onclick = () => alert("Nunca pares de aprender")
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>This</h1>
+    <p>Se refiere a un objeto, el que está actualmente ejecutando un pedazo de código</p>
+    <script>
+        //this global
+        console.log(`This: ${this}`)
+
+        //use strict
+        function strictMode(){
+            "use strict"
+            console.log(`This: ${this}`)
+        }
+
+        strictMode()
+
+        //this en objetos
+        function Bottle(content, capacity){
+            this.content = content
+            this.capacity = capacity
+        }
+
+        Bottle.prototype.drink = function(liquidDrained){
+            this.capacity = this.capacity -liquidDrained
+            console.log(`The bottle now has ${this.capacity}ml of ${this.content}`)
+        }
+
+        const myBottle = new Bottle('Gauyaba juice', 2000)
+        myBottle.drink(400)
+        myBottle.drink(400)
+        
+    </script>
+</body>
+</html>
