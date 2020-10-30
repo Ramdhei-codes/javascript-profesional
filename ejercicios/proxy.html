@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proxy</title>
+</head>
+<body>
+    <h1>Abre la consola</h1>
+    <script src="https://unpkg.com/fast-levenshtein@2.0.6/levenshtein.js"></script>
+    <script>
+        //Proxy se parece a get y set
+
+
+        const target = {
+            name: "Richard",
+            country: "Costa Rica",
+            job: "React Dev",
+        }
+
+
+        const handler = {
+            get(obj, prop){
+                if(prop in obj){
+                    return obj[prop]
+                }
+
+                const suggestion = Object.keys(obj).find(key => {
+                    return Levenshtein.get(key, prop) <= 3
+                })
+
+                if(suggestion){
+                    console.log(`${prop} no se encuentra. ¿Quisiste decir ${suggestion}?`)
+                }
+
+                return obj[prop]
+            }
+        }
+
+        const proxy = new Proxy(target, handler)
+    </script>
+</body>
+</html>
