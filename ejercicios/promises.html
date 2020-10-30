@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promesas</title>
+</head>
+
+<body>
+    <ul>
+        <li><button id="random">Get 3 random characters</button></li>
+        <li><button id="parallel">Get 3 random characters in parallel</button></li>
+        <li><button id="fastest">Get Fastest of 3 random characters</button></li>
+    </ul>
+
+    <ul id="list"></ul>
+    <script>
+        const API = 'https://rickandmortyapi.com/api/character/'
+        
+
+        async function getNumberOfCharacters(){
+            const response = await fetch(API)
+            const data = await response.json()
+            
+            return data.results.length
+        }
+
+        const getCharacter = async (id) => {
+            const response = await fetch(`${API}${id}`)
+            const data = await response.json()
+            return data
+        }
+
+        const getCharactersIds = async(n = 3) => {
+            const numberOfCharacters = await getNumberOfCharacters()
+            const ids = new Array(n).fill(0).map(n => Math.floor(Math.random()*numberOfCharacters))
+
+            return ids
+        }
+
+        const getRandomCharacters = async () => {
+            const ids = await getCharactersIds()
+
+            const characters = []
+            
+            for(const id of ids){
+                const character  = await getCharacter(id)
+
+                characters.push(character)
+            }
+
+            return characters
+        }
+
+        const getRandomCharactersInParallel = async() => {
+            const ids = await getCharactersIds()
+            const charPromises = ids.map(id => getCharacter(id))
+
+            const characters = await Promise.all(charPromises)
+
+            return characters
+        }
+
+        const getFastestCharacter = async() => {
+            const ids = await getCharactersIds()
+            const charPromises = ids.map(id => getCharacter(id))
+
+            const fastestCharacter = await Promise.race(charPromises)
+
+            return fastestCharacter
+        }
+
+
+
+        const renderCharacter = (characters) => {
+            
+            const characterList = document.getElementById('list')
+            characterList.innerHTML = ''
+
+            characters.forEach(character => {
+                const listItem = document.createElement('li')
+                listItem.innerHTML = `
+                    <img src = "${character.image}">
+                    <h4>${character.name}</h4>
+                `
+
+                characterList.appendChild(listItem)
+            });
+        }
+
+        document.getElementById('random').onclick = async function(){
+            const characters = await getRandomCharacters()
+            renderCharacter(characters)
+        }    
+        
+        document.getElementById('parallel').onclick = async function(){
+            const characters = await getRandomCharactersInParallel()
+            renderCharacter(characters)
+        }
+
+        document.getElementById('fastest').onclick = async function(){
+            const character = await getFastestCharacter()
+            renderCharacter([character])
+        }
+
+    </script>
+</body>
+
+</html>
