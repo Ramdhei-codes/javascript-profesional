@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generators</title>
+</head>
+
+<body>
+    <h1>Abre la consola</h1>
+    <script>
+        //Son funciones cuya ejecución podemos pausar y continuar a voluntad
+
+        function* generator() {
+            console.log("Falcon 9 took off")
+            yield 1 //esto detiene la ejecución y devuelve dos valores: el número y un boolean que nos dice si ya acabó
+            yield 2
+            console.log("Falcon 9 landed succesfully on of course I still love you")
+        }
+
+        //Podemos hacer generadores infinitos
+
+        function* forever() {
+            let num = 0
+
+            while (true) {
+                num = Math.ceil(Math.random() * 200)
+                yield num
+            }
+        }
+
+
+        //Podemos reiniciar el valor del yield
+
+        function* iCanReset() {
+            let id = 1;
+            let reset
+
+            while (true) {
+                reset = yield id
+
+                if (reset) {
+                    id = 1
+                } else {
+                    id = id + 1
+                }
+            }
+        }
+
+        //Hagamos la secuencia de fibonacci
+
+        function* fibonacci(){
+            let a = 1
+            let b = 1
+
+            while (true) {
+                const nextNumber = a + b
+                a = b
+                console.log(a)
+                b = nextNumber
+                console.log(b)
+                
+                yield nextNumber
+            }
+        }
+    </script>
+</body>
+
+</html>
