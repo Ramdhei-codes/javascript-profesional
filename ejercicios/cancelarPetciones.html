@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cómo cancelar peticiones</title>
+</head>
+<body>
+    <img id="example-image" src="" alt="" height="500">
+    <button id="load">Load HUGE image</button>
+    <button id="stop" disabled>Stop loading</button>
+
+    <script>
+        const url = 'https://images.pexels.com/photos/5672029/pexels-photo-5672029.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
+        const img = document.getElementById('example-image')
+        const loadButton = document.getElementById('load')
+        const stopButton = document.getElementById('stop')
+        let controller
+
+        const startLoading = () => {
+            loadButton.disabled = true
+            loadButton.innerText = 'Loading Image'
+            stopButton.disabled = false
+        }
+
+        const stopLoading = () => {
+            loadButton.disabled = false
+            loadButton.innerText = 'Load HUGE image'
+            stopButton.disabled = true
+        }
+
+        loadButton.onclick = async () => {
+            startLoading()
+
+            controller = new AbortController
+
+            try {
+                const response = await fetch(url, {signal: controller.signal})
+                const blob = await response.blob()
+                imgUrl = URL.createObjectURL(blob)
+                img.src = imgUrl
+            } catch (error) {
+                console.log(error.message)
+            }
+
+            stopLoading()
+        }
+
+        stopButton.onclick = async () => {
+            controller.abort()
+            stopLoading()
+        }
+    </script>
+</body>
+</html>
