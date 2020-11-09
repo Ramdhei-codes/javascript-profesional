@@ -1,9 +1,9 @@
-class AutoPause{
-    constructor(){
+class AutoPause {
+    constructor() {
         this.threshold = 0.25
         this.handleIntersection = this.handleIntersection.bind(this)
     }
-    run(player){
+    run(player) {
         this.player = player
         const observer = new IntersectionObserver(this.handleIntersection, {
             threshold: this.threshold,
@@ -12,13 +12,13 @@ class AutoPause{
         observer.observe(this.player.media)
     }
 
-    handleIntersection(entries){
+    handleIntersection(entries) {
         const entry = entries[0]
         const isVisible = entry.intersectionRatio >= this.threshold
 
-        if(isVisible){
+        if (isVisible) {
             this.player.play()
-        }else{
+        } else {
             this.player.pause()
         }
     }

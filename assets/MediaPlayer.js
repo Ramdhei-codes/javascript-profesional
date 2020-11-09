@@ -1,61 +1,61 @@
 function MediaPlayer(config) {
-    this.media = config.el;
-    this.plugins = config.plugins || [];
-  
-    this._initPlugins();
+  this.media = config.el;
+  this.plugins = config.plugins || [];
+
+  this._initPlugins();
+}
+
+MediaPlayer.prototype._initPlugins = function () {
+  const player = {
+    play: () => this.play(),
+    pause: () => this.pause(),
+    media: this.media,
+
+    get muted() {
+      return this.media.muted
+    },
+
+    set muted(value) {
+      this.media.muted = value
+
+    }
+
   }
-  
-  MediaPlayer.prototype._initPlugins = function() {
-    const player = {
-      play: () => this.play(),
-      pause: () => this.pause(),
-      media: this.media,
+  this.plugins.forEach(plugin => {
+    plugin.run(player);
+  });
+};
 
-      get muted(){
-        return this.media.muted
-      },
+MediaPlayer.prototype.play = function () {
+  this.media.play();
+};
 
-      set muted(value){
-        this.media.muted = value
-        
-      }
+MediaPlayer.prototype.pause = function () {
+  this.media.pause();
+};
 
-    }
-    this.plugins.forEach(plugin => {
-      plugin.run(player);
-    });
-  };
-  
-  MediaPlayer.prototype.play = function() {
-    this.media.play();
-  };
-  
-  MediaPlayer.prototype.pause = function() {
-    this.media.pause();
-  };
-  
-  MediaPlayer.prototype.togglePlay = function() {
-    if (this.media.paused) {
-      this.play();
-    } else {
-      this.pause();
-    }
-  };
-
-  MediaPlayer.prototype.toggleMute = function() {
-    if (this.media.muted) {
-      this.unmute()
-    } else {
-      this.mute()
-    }
+MediaPlayer.prototype.togglePlay = function () {
+  if (this.media.paused) {
+    this.play();
+  } else {
+    this.pause();
   }
-  
-  MediaPlayer.prototype.mute = function() {
-    this.media.muted = true;
-  };
-  
-  MediaPlayer.prototype.unmute = function() {
-    this.media.muted = false;
-  };
-  
-  export default MediaPlayer;
+};
+
+MediaPlayer.prototype.toggleMute = function () {
+  if (this.media.muted) {
+    this.unmute()
+  } else {
+    this.mute()
+  }
+}
+
+MediaPlayer.prototype.mute = function () {
+  this.media.muted = true;
+};
+
+MediaPlayer.prototype.unmute = function () {
+  this.media.muted = false;
+};
+
+export default MediaPlayer;
