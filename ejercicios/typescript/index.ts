@@ -53,3 +53,24 @@ function fullName(firstName: string, lastName:string = 'López'):void{
 }
 
 fullName('Ramdhei')
+
+
+//interfaces: sirven para definir tipos y evitar errores en llamadas a propiedades de un objeto
+
+interface Carro {
+    marca: string
+    modelo: number
+    color?: Color
+}
+
+const miCarro: Carro = {
+    marca: 'Peugeot 206',
+    modelo: 2011,
+    // color: Color.Azul
+}
+
+miCarro.toString = function(): string {
+    return this.color ? `Un ${this.marca} modelo ${this.modelo} de color ${this.color}` : `Un ${this.marca} modelo ${this.modelo}`
+}
+
+console.log(miCarro.toString())
