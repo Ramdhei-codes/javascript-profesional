@@ -16,5 +16,8 @@
   },
   "browserslist": [
     "last 1 Chrome version"
-  ]
+  ],
+  "dependencies": {
+    "@ramdhei/mediaplayer": "^1.0.0"
+  }
 }

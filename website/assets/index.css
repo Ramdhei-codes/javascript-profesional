@@ -36,3 +36,30 @@ main {
 .movie {
   width: 100%;
 }
+
+.ads {
+  position: absolute;
+  bottom: 1rem;
+  background-color: whitesmoke;
+  margin: 0 0.5rem;
+  padding: 1rem;
+}
+
+.ads__link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.ads__img {
+  height: 5rem
+}
+
+.ads__info {
+  padding: 0 1rem;
+  color: black;
+}
+
+
+
